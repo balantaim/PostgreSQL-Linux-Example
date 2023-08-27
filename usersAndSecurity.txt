@@ -1,0 +1,53 @@
+--Some commands
+--Show DB port
+SHOW port;
+--exit
+\q
+--List of roles
+\du
+
+------------------------
+
+--Login with super user
+sudo -u postgres psql
+
+--Login with super admin and create User with password and DB asigned to the user
+CREATE ROLE usertest LOGIN PASSWORD 'test';
+CREATE DATABASE dbtest WITH OWNER = usertest;
+
+--Check the port number
+SHOW port;
+
+--Create new role
+CREATE ROLE Sales;
+
+--Revoke all rights on the current db from Schema public
+REVOKE ALL ON DATABASE dbtest FROM public;
+
+--Give role Sales to user 'usertest'
+GRANT Sales TO usertest;
+
+--Give connect right to role Sales
+GRANT CONNECT ON DATABASE dbtest TO Sales;
+
+--Revoke all rights on public
+REVOKE ALL ON SCHEMA public FROM public;
+
+--Sales role can now use Schema public with the current permissions
+GRANT USAGE ON SCHEMA public to Sales;
+
+--Add Create privilegies to role Sales
+GRANT CREATE ON SCHEMA public to Sales;
+
+--List of privilegies: SELECT, INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES,
+--TRIGGER, CREATE, CONNECT, TEMPORARY, EXECUTE, USAGE, SET and ALTER SYSTEM
+
+--exit with super user
+\q
+
+--Login with current user that we create(h = ip, d = database name, U = user name, p = port)
+--Password that we create is 'test'
+psql -h localhost -d dbtest -U usertest -p 5432
+
+--Now we could create our tables and manage the records
+
