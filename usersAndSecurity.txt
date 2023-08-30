@@ -50,4 +50,44 @@ GRANT CREATE ON SCHEMA public to Sales;
 psql -h localhost -d dbtest -U usertest -p 5432
 
 --Now we could create our tables and manage the records
+--Create Table for users
+CREATE TABLE Users
+(
+id SERIAL PRIMARY KEY,
+name VARCHAR(50) NOT NULL,
+email VARCHAR(50) UNIQUE NOT NULL,
+password TEXT NOT NULL,
+gender VARCHAR(6),
+country VARCHAR(20),
+platform VARCHAR(10) NOT NULL,
+rights INTEGER NOT NULL
+);
 
+--Enable extension for crypto password (Need to be done only first time)
+CREATE EXTENSION pgcrypto;
+
+-- Insert basic User and Admin with crypt password
+INSERT INTO Users ( name, email, password, gender, country, platform, rights)
+VALUES ( 'Admin', 'admin@postgres.com', crypt('admin', gen_salt('bf')), 'male', 'Bulgaria', 'web', 1 );
+
+INSERT INTO Users (name, email, password, platform, rights)
+VALUES ( 'user', 'user@postgres.com', crypt('user1234', gen_salt('bf')), 'web', 0 );
+
+--Check if the user with this email has this password (return nothing if the password does not match)
+SELECT id, name FROM Users
+ WHERE email = 'user@postgres.com' 
+   AND password = crypt('user1234', password);
+
+--Update user's password + crypt()
+UPDATE Users
+SET password = crypt('user4321', gen_salt('md5'))
+WHERE email LIKE '%user@postgres.com%';
+
+--Perform delete on a record
+DELETE FROM Users
+WHERE email = 'user@postgres.com';
+
+-- Check the result from the table (it should have only 1 record)
+SELECT * FROM Users;
+
+--The End of the test example
