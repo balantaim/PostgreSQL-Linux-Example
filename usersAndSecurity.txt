@@ -87,7 +87,7 @@ WHERE email LIKE '%user@postgres.com%';
 DELETE FROM Users
 WHERE email = 'user@postgres.com';
 
--- Check the result from the table (it should have only 1 record)
+-- Check the result from the table (it should has only 1 record)
 SELECT * FROM Users;
 
 --The End of the test example
