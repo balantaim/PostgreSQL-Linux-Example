@@ -60,18 +60,18 @@ password TEXT NOT NULL,
 gender VARCHAR(6),
 country VARCHAR(20),
 platform VARCHAR(10) NOT NULL,
-rights INTEGER NOT NULL
+rights INTEGER NOT NULL DEFAULT 0
 );
 
 --Enable extension for crypto password (Need to be done only first time)
 CREATE EXTENSION pgcrypto;
 
--- Insert basic User and Admin with crypt password
+--Insert basic User and Admin with crypt password
 INSERT INTO Users ( name, email, password, gender, country, platform, rights)
 VALUES ( 'Admin', 'admin@postgres.com', crypt('admin', gen_salt('bf')), 'male', 'Bulgaria', 'web', 1 );
 
-INSERT INTO Users (name, email, password, platform, rights)
-VALUES ( 'user', 'user@postgres.com', crypt('user1234', gen_salt('bf')), 'web', 0 );
+INSERT INTO Users (name, email, password, platform)
+VALUES ( 'user', 'user@postgres.com', crypt('user1234', gen_salt('bf')), 'web');
 
 --Check if the user with this email has this password (return nothing if the password does not match)
 SELECT id, name FROM Users
@@ -87,7 +87,7 @@ WHERE email LIKE '%user@postgres.com%';
 DELETE FROM Users
 WHERE email = 'user@postgres.com';
 
--- Check the result from the table (it should has only 1 record)
+--Check the result from the table (it should has only 1 record)
 SELECT * FROM Users;
 
 --The End of the test example
