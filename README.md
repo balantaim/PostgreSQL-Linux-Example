@@ -12,7 +12,7 @@
 <p>Database shema</p>
 <img src="diagram.png" alt="Database shemat" height=100%>
 
-Task 2 "usersAndSecurity": Increase security by creating roles, users, manage schema privilegies:
+### Task 2 "usersAndSecurity": Increase security by creating roles, users, manage schema privilegies:
 <ol>
   <li>Create Create Role and User with password</li>
   <li>Asign Role, Database and Schema public to current user</li>
