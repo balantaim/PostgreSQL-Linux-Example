@@ -10,7 +10,7 @@
   <li>Write some test queries</li>
 </ol>
 <p>Database shema</p>
-![Database shema](diagram.png)
+<img src="diagram.png" alt="Database shemat" height=100%>
 
 Task 2 "usersAndSecurity": Increase security by creating roles, users, manage schema privilegies:
 <ol>
