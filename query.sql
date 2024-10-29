@@ -7,6 +7,8 @@ sudo -u postgres psql
 
 CREATE DATABASE toolsdelivery;
 
+--Show all databases
+\l
 --Connect to the DB(DBName)
 \c toolsdelivery
 --Show the tables
